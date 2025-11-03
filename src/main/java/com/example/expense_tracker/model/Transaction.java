@@ -23,7 +23,9 @@ public class Transaction {
     private LocalDate date;
 
 
-    @ManyToOne(fetch=FetchType.LAZY) // MANY TRANSACTIONS CAN HAVE ONE CATEGORY
+    @ManyToOne(fetch=FetchType.LAZY) // MANY TRANSACTIONS CAN belong to 1 CATEGORY
+    // category is the parent, transaction is the child.
+    // under 1 category there sould be multiple transactions
     // telling jpa to create a column named column_id
     // in our transaction table to store
     // the id of the category to which that specific transaction is linked to
