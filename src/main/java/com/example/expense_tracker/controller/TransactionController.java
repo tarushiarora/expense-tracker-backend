@@ -1,5 +1,6 @@
 package com.example.expense_tracker.controller;
 
+import com.example.expense_tracker.dto.MonthlySummaryDTO;
 import com.example.expense_tracker.model.Transaction;
 import com.example.expense_tracker.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +71,18 @@ public class TransactionController {
          catch(RuntimeException e){
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
+    }
+
+    //new endpoint to calculate monthly summary
+    @GetMapping("/summary/monthly")
+    public ResponseEntity<MonthlySummaryDTO> getMonthlySummary(@RequestParam("month") String monthStr){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        YearMonth yearMonth = YearMonth.parse(monthStr, formatter);
+
+        // calling the service method
+        MonthlySummaryDTO summary = transactionService.getMonthlySummary(yearMonth);
+
+        return ResponseEntity.ok(summary);
     }
 
 }

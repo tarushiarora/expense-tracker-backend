@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
+    // custom query to calculate amount spent during a specific time period
     @Query("SELECT COALESCE(SUM(t.amount, 0) FROM Transaction t " +
             "WHERE t.category.type = :type " +
             "AND t.date BETWEEN :startDate AND :endDate")
