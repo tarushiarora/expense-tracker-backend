@@ -1,5 +1,6 @@
 package com.example.expense_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -38,8 +39,9 @@ public class Transaction {
     //to establish a link betweeen specific user and their transactions
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "password"})
+    @JoinColumn(name = "user_id", nullable = false)
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "password"})
+    @JsonIgnore
     private User user;
 
     public Transaction(){

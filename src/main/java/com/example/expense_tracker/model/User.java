@@ -1,5 +1,6 @@
 package com.example.expense_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 
@@ -17,6 +18,8 @@ public class User  {
     @Column(nullable = false)
     private String username;
 
+    //Ignore this when writing JSON to the user, but PLEASE read it when it's coming from the user.
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
