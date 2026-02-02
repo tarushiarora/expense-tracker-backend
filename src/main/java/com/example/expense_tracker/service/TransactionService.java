@@ -45,7 +45,8 @@ public class TransactionService {
 
     // READ
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findByUsername(getCurrentUsername());
+        String currentUsername = getCurrentUsername();
+        return transactionRepository.findByUserUsername(currentUsername);
     }
 
     // READ( GET BY ID)

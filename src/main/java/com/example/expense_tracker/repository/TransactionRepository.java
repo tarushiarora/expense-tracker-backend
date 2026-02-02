@@ -17,7 +17,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     // find transactions where linked user's username matches thr input
-    List<Transaction> findByUsername(String username);
+    List<Transaction> findByUserUsername(String username);
 
     // updated query: so that we only count transactions belonging to currently logged in user
 
