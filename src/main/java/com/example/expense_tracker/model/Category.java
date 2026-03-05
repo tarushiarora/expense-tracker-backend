@@ -1,5 +1,6 @@
 package com.example.expense_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,19 +9,25 @@ public class Category {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false, unique=true)
+    @Column(nullable=false)
     private String name;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    public Category(){
+    // connecting category to a specific user
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
+    public Category(){
     }
 
-    public Category(String name, TransactionType type) {
+    public Category(String name, TransactionType type, User user) {
         this.name = name;
         this.type = type;
+        this.user = user;
     }
 
     // getters and setters
@@ -47,5 +54,13 @@ public class Category {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }
