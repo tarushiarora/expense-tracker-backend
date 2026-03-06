@@ -9,6 +9,9 @@ import java.util.List;
 //
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findByType(TransactionType type);
-    // give categories where type is an expense
+
+    List<Category> findByUserUsername(String username);
+
+    List<Category> findByTypeAndUserUsername(TransactionType type, String username);
+
 }
