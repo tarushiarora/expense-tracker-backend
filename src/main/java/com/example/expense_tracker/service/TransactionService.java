@@ -7,7 +7,9 @@ import com.example.expense_tracker.model.TransactionType;
 import com.example.expense_tracker.repository.TransactionRepository;
 import com.example.expense_tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -74,10 +76,10 @@ public class TransactionService {
 
     //DELETE
     public void deleteTransaction(Long id) {
-        // preventing users from deleting someone else's data
+        // We check if it exists AND belongs to the user in one step
         Transaction existing = transactionRepository.findById(id)
-                .filter(t->t.getUser().getUsername().equals(getCurrentUsername()))
-                        .orElseThrow(() -> new RuntimeException("Transaction not found or unauthorized access"));
+                .filter(t -> t.getUser().getUsername().equals(getCurrentUsername()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found or access denied"));
 
         transactionRepository.delete(existing);
     }
